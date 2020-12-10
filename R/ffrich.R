@@ -77,6 +77,7 @@
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
 #' @importFrom tidyr gather spread
 #' @importFrom stats complete.cases
+#' @importFrom ade4 is.euclid
 #'
 #' @examples
 #' data(macro_ex)
@@ -293,7 +294,16 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
       tax.na[ , 2 ] <- colnames( taxa_traits[ , -1 ] )[ tax.na[ , 2 ]  ]
       colnames( tax.na ) <- c( "Taxa" , "Traits" )
       tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
-      perc_expl <- sum( qual_fs$mat_eig[ 1:m ] / sum( qual_fs$mat_eig ) )
+
+      if( ! is.euclid( gowdis( tr_prep , ord = "classic" ) ) & metric == "Gower" ){
+        res.eig <- qual_fs$mat_eig
+        r2.eig <- cumsum( ( res.eig[ 1:m ] ) )
+        neg.eig <- max( abs( res.eig[ which( res.eig < 0 ) ] ) )
+        perc_expl  <-  ( r2.eig + ( 1:Order ) * neg.eig ) / ( sum( res.eig ) + ( Order - 1  ) * neg.eig )
+      } else{
+        perc_expl <- sum( qual_fs$mat_eig[ 1:m ] ) / sum( qual_fs$mat_eig )
+      }
+
     } else { tax.na <- "No NAs detected" }
 
     res.list <- list( fric, data.frame( Taxa = abu.names, tr_prep ),
