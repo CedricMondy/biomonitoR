@@ -293,11 +293,11 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
       tax.na[ , 2 ] <- colnames( taxa_traits[ , -1 ] )[ tax.na[ , 2 ]  ]
       colnames( tax.na ) <- c( "Taxa" , "Traits" )
       tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
-      perc_expl <- qual_fs$mat_eig[ 1:m ] / sum( qual_fs$mat_eig )
+      perc_expl <- sum( qual_fs$mat_eig[ 1:m ] / sum( qual_fs$mat_eig ) )
     } else { tax.na <- "No NAs detected" }
 
     res.list <- list( fric, data.frame( Taxa = abu.names, tr_prep ),
-                      data.frame( Taxa = abu.names, abundances ) , nbdim, taxa.excluded , tax.na , perc_expl  )
+                      data.frame( Taxa = abu.names, abundances ) , m , taxa.excluded , tax.na , perc_expl  )
     names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "taxa_excluded", "NA_detection" , "perc_expl" )
     return( res.list )
   }
