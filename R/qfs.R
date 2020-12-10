@@ -70,7 +70,7 @@ fric_3d <- function( taxa , fpc , m){
   apply( taxa > 0, 1, sum ) -> ric
   for ( com in 1:nrow( taxa ) ){
     fpc[ which( unlist( rep( taxa[ com ,] ) ) > 0 ), 1:m ] -> tr.com
-    if (ric[ com ]> m + 1 ) convhulln( tr.com , "FA" )$vol/fric.3d.max -> fric.3d[ com ] else NA -> fric.3d[ com ]
+    if (ric[ com ] > m ) convhulln( tr.com , "FA" )$vol/fric.3d.max -> fric.3d[ com ] else NA -> fric.3d[ com ]
   }
   return( fric.3d )
 }

@@ -297,7 +297,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
 
       if( ! is.euclid( gowdis( tr_prep , ord = "classic" ) ) & metric == "Gower" ){
         Order <- attr( gowdis( tr_prep , ord = "classic" ) , "Size" )
-        res.eig <- qual_fs$mat_eig
+        res.eig <- suppressWarnings( cmdscale( gowdis( tr_prep , ord = "metric" ) , k = nrow( tr_prep ) - 1 , eig = TRUE )$eig )
         r2.eig <- cumsum( ( res.eig ) )
         neg.eig <- max( abs( res.eig[ which( res.eig < 0 ) ] ) )
         perc_expl  <-  ( r2.eig + ( 1:Order ) * neg.eig ) / ( sum( res.eig ) + ( Order - 1  ) * neg.eig )
