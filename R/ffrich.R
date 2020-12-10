@@ -296,6 +296,7 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
       tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
 
       if( ! is.euclid( gowdis( tr_prep , ord = "classic" ) ) & metric == "Gower" ){
+        Order <- attr( gowdis( tr_prep , ord = "classic" ) , "Size" ) - 1
         res.eig <- qual_fs$mat_eig
         r2.eig <- cumsum( ( res.eig[ 1:m ] ) )
         neg.eig <- max( abs( res.eig[ which( res.eig < 0 ) ] ) )
