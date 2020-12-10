@@ -50,6 +50,8 @@ asBiomonitor <- function ( x , group = "mi" , dfref = NULL , FUN = sum ){
     stop( "Non-numeric columns other than Taxa are not allowed" )
   }
 
+  x <- data.frame( x , stringsAsFactors = TRUE )
+
   # check if x is a presence absence data.frame
   check.pa <- any( x[ , -which( "Taxa" %in% colnames( x ) ) , drop = FALSE ]  != 1 )
 

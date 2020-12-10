@@ -71,6 +71,7 @@
 #'  \item **nbdim**: number of dimensions used after calculatin the quality of functional spaces according to Maire et al., (2015);
 #'  \item **taxa_excluded**: a vector conaining the names of the taxa exluded from the calculations;
 #'  \item **NA_detection**: a data.frame containing taxa on the first column and the corresponding trais with NAs on the second column.
+#'  \item **perc_expl**: percentage of the variation explained by the nbdim axes.
 #' }
 #'
 #' @importFrom dplyr '%>%' mutate select left_join group_by summarise ungroup
@@ -292,11 +293,12 @@ ffrich <- function(x, traitDB = NULL, agg = FALSE,  dfref = NULL, traitSel = FAL
       tax.na[ , 2 ] <- colnames( taxa_traits[ , -1 ] )[ tax.na[ , 2 ]  ]
       colnames( tax.na ) <- c( "Taxa" , "Traits" )
       tax.na <- tax.na[ order( tax.na[ , 1 ] ) ,  ]
+      perc_expl <- qual_fs$mat_eig[ 1:m ] / sum( qual_fs$mat_eig )
     } else { tax.na <- "No NAs detected" }
 
     res.list <- list( fric, data.frame( Taxa = abu.names, tr_prep ),
-                      data.frame( Taxa = abu.names, abundances ) , nbdim, taxa.excluded , tax.na )
-    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "taxa_excluded", "NA_detection" )
+                      data.frame( Taxa = abu.names, abundances ) , nbdim, taxa.excluded , tax.na , perc_expl  )
+    names( res.list ) <- c( "results" , "traits" , "taxa" , "nbdim" , "taxa_excluded", "NA_detection" , "perc_expl" )
     return( res.list )
   }
 }

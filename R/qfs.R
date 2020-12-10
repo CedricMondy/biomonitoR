@@ -55,8 +55,10 @@ qfs <- function(x, nbdim = nbdim, metric = metric, corr_method = corr_method){
     meanSD[paste("m_",k,"D",sep="")]<-round( ( (sum((z-yst)^2)) / (S*(S-1)/2) ) ,6)
   }  # end of k
 
+  mat_eig <- mat_cmd$eig[ mat_cmd$eig > 0 ]
+
   # list of outputs
-  res <- list( meanSD = meanSD , mat_dissim = mat_dissim, fpc = mat_coord )
+  res <- list( meanSD = meanSD , mat_dissim = mat_dissim, fpc = mat_coord , mat_eig = mat_eig )
 
   invisible( res )
 
